@@ -1,18 +1,10 @@
 /**********************************************************************/
-//** ENGR-2350 Template Project 
-//** NAME: Nicholas Danas and Curran Flanders
-//** RIN: 662055547 and 662017081
-//** This is the base project for several activities and labs throughout
-//** the course.  The outline provided below isn't necessarily *required*
-//** by a C program; however, this format is required within ENGR-2350
-//** to ease debugging/grading by the staff.
+//** AUTHORS: Nicholas Danas and Curran Flanders
 /**********************************************************************/
 
-// We'll always add this include statement. This basically takes the
-// code contained within the "engr_2350_msp432.h" file and adds it here.
 #include "engr2350_msp432.h"
 
-// Add function prototypes here as needed.
+// Add function prototypes here.
 void GPIO_Init(void);
 void Timer_Init(void);
 void CCR_ISR(void);
@@ -21,7 +13,7 @@ void Go_Straight(uint16_t distance);
 void Turn(uint16_t angle);
 void Drive(uint16_t * distances, uint16_t * angles);
 
-// Add global variables here as needed.
+// Add global variables here.
 //encoder counting variables
 Timer_A_ContinuousModeConfig continuousConfig;
 Timer_A_CaptureModeConfig captureModeConfigRight;
@@ -59,7 +51,7 @@ uint16_t wheel_rotations = 0; //in 1/360 increments
 uint8_t i = 0;
 int main(void)    /*** Main Function ***/
 {  
-    // Add local variables here, as needed.
+    //Local variables
 
     // We always call the "SysInit()" first to set up the microcontroller
     // for how we are going to use it.
@@ -67,7 +59,7 @@ int main(void)    /*** Main Function ***/
     GPIO_Init();
     PWM_Init();
     Timer_Init();
-    // Place initialization code (or run-once) code here
+    // Initialization code
 
     while(1)
     {  
@@ -115,7 +107,7 @@ int main(void)    /*** Main Function ***/
     }   
 }   
 
-// Add function declarations here as needed
+// Function declarations
 void GPIO_Init(void){
     // Set motor enable and direction pins as output
     GPIO_setAsOutputPin(GPIO_PORT_P3, GPIO_PIN6 | GPIO_PIN7);
@@ -206,7 +198,6 @@ void Drive(uint16_t * distances, uint16_t * angles){
 
 
     GPIO_setOutputHighOnPin(GPIO_PORT_P3, GPIO_PIN6 | GPIO_PIN7);
-    //remember to reset wheel rotations to 0
     for (i=0;i<4;i++){
         Go_Straight(distances[i]);
         Turn(angles[i]);
@@ -219,7 +210,7 @@ void Go_Straight(uint16_t distance){
     wheel_rotations = 0;
     stop_counts = distance*360/(wheel_radius*2*3.14159);
     GPIO_setOutputLowOnPin(GPIO_PORT_P5, GPIO_PIN5 | GPIO_PIN4);
-    while (wheel_rotations < stop_counts){//note: check to see if we are using the correct variable
+    while (wheel_rotations < stop_counts){
 
     }
 }
